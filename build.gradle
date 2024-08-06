@@ -1,0 +1,39 @@
+plugins {
+    id 'org.springframework.boot' version '3.3.2'
+    id 'io.spring.dependency-management' version '1.1.6'
+    id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // 기존 의존성
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // JPA 및 Hibernate 의존성 추가
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    
+    // 데이터베이스 드라이버 (H2는 개발용, 실제 환경에서는 다른 데이터베이스 드라이버 필요)
+    runtimeOnly 'com.h2database:h2'
+
+    // 실제 데이터베이스를 사용할 경우 필요한 의존성
+    // PostgreSQL 예시
+    // runtimeOnly 'org.postgresql:postgresql'
+    
+    // MySQL 예시
+    // runtimeOnly 'mysql:mysql-connector-java'
+}
+
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

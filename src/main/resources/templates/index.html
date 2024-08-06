@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket Example</title>
+    <script type="text/javascript">
+        var ws;
+
+        function openSocket() {
+            ws = new WebSocket("ws://localhost:8080/ws/messages");
+
+            ws.onopen = function() {
+                console.log("WebSocket is open now.");
+            };
+
+            ws.onmessage = function(event) {
+                // Display the received message
+                document.getElementById("messages").innerHTML += "<br/>" + event.data;
+            };
+
+            ws.onclose = function() {
+                console.log("WebSocket is closed now.");
+            };
+
+            ws.onerror = function(error) {
+                console.error("WebSocket error: ", error);
+            };
+        }
+
+        function sendMessage() {
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                var message = document.getElementById("message").value;
+                ws.send(message);
+            } else {
+                console.error("WebSocket is not open or undefined.");
+            }
+        }
+
+        function closeSocket() {
+            if (ws) {
+                ws.close();
+            }
+        }
+
+        window.onload = function() {
+            openSocket();
+        }
+    </script>
+</head>
+<body>
+    <h1>WebSocket Example</h1>
+    <input type="text" id="message" placeholder="Enter message">
+    <button onclick="sendMessage()">Send</button>
+    <button onclick="closeSocket()">Close Socket</button>
+    <div id="messages"></div>
+</body>
+</html>
